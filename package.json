@@ -1,7 +1,6 @@
 {
   "name": "slim-mom",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
     "@reduxjs/toolkit": "^1.8.5",
