@@ -19,13 +19,13 @@ const Logo = () => {
 
   return (
     <>
-      {isMobile && !isRetina && !isLogin &&(
+      {isMobile && !isLogin &&(
         <Link to="/dairy">
           <img src={lt} alt="web-site logo" width="160" />
         </Link>
       )}
 
-      {isMobile && !isRetina && isLogin &&(
+      {isMobile && isLogin &&(
         <Link to="/dairy">
           <img src={lt2x} alt="web-site logo" width="160" />
         </Link>
