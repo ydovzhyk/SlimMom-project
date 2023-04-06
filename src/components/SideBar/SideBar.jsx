@@ -16,9 +16,10 @@ import {
   getKcalConsumed2,
   getDailyRate2,
   getPercentsOfDailyRate2,
+  dayPeriod,
 } from 'redux/day/day-selectors';
 import { getNotAllowedProducts } from 'redux/auth/auth-selectors';
-import { getInfoByDay } from 'redux/day/day-operations';
+import { getInfoByDay, getInfoByPeriod } from 'redux/day/day-operations';
 import { getDay } from 'redux/dairy-calendar/dairy-calendar-selectors';
 
 const SideBar = () => {
@@ -34,6 +35,7 @@ const SideBar = () => {
   const kcalConsumed2 = useSelector(getKcalConsumed2);
   const dailyRate2 = useSelector(getDailyRate2);
   const percentsOfDailyRate2 = useSelector(getPercentsOfDailyRate2);
+  const periodSummary = useSelector(dayPeriod);
 
   const dispatch = useDispatch();
 
@@ -42,8 +44,9 @@ const SideBar = () => {
   useEffect(() => {
     if (date) {
       dispatch(getInfoByDay({ date }));
+      dispatch(getInfoByPeriod());
     }
-  }, [dispatch, date, notAllowedProducts]);
+  }, [dispatch, date]);
 
   useEffect(() => {
     if (!notAllowedProducts) {
@@ -54,14 +57,60 @@ const SideBar = () => {
 
   const filterRecommendedFood = e => {
     const filteredProducts = notAllowedProducts.filter(el =>
-      el.includes(e.target.value)
-    );
-
+    el.toLowerCase().includes(e.target.value.toLowerCase()));
     setFilteredFood(filteredProducts);
   };
 
   return (
     <div className={styles.container_sidebar}>
+
+      <div className={styles.block_sum}>
+      <div className={styles.sum}>
+        <h3 className={styles.title_sidebar}>Середній за весь період</h3>
+        <ul className={styles.list_sidebar}>
+          <li className={styles.item_sidebar}>
+            <p className={styles.text_sidebar_sum}>Залишилося</p>
+            <span className={styles.data}>
+              {periodSummary.kcalLeft
+                ? Math.floor(periodSummary.kcalLeft) + ' kcal'
+                : kcalLeft2
+                ? Math.floor(kcalLeft2) + ' kcal'
+                : '000 kcal'}
+            </span>
+          </li>
+          <li className={styles.item_sidebar}>
+            <p className={styles.text_sidebar}>Спожилося</p>
+            <span className={styles.data}>
+              {periodSummary.kcalConsumed
+                ? Math.floor(periodSummary.kcalConsumed) + ' kcal'
+                : kcalConsumed2
+                ? Math.floor(kcalConsumed2) + ' kcal'
+                : '000 kcal'}
+            </span>
+          </li>
+          <li className={styles.item_sidebar}>
+            <p className={styles.text_sidebar}>Добова норма</p>
+            <span className={styles.data}>
+              {periodSummary.dailyRate
+                ? Math.floor(periodSummary.dailyRate) + ' kcal'
+                : dailyRate2
+                ? Math.floor(dailyRate2) + ' kcal'
+                : '000 kcal'}
+            </span>
+          </li>
+          <li className={styles.item_sidebar}>
+            <p className={styles.text_sidebar}>% від норми</p>
+            <span className={styles.data}>
+              {periodSummary.percentsOfDailyRate
+                ? Math.floor(periodSummary.percentsOfDailyRate*100) + ' %'
+                : percentsOfDailyRate2
+                ? Math.floor(percentsOfDailyRate2) + ' %'
+                : '0 %'}
+            </span>
+          </li>
+        </ul>
+      </div>
+
       <div className={styles.sum}>
         <h3 className={styles.title_sidebar}>Резюме за {date}</h3>
         <ul className={styles.list_sidebar}>
@@ -107,6 +156,8 @@ const SideBar = () => {
           </li>
         </ul>
       </div>
+      </div>
+
       <div className={styles.food}>
         <h3 className={styles.title_sidebar}>Не рекомендована їжа</h3>
         {notAllowedProducts?.length > 0 && (
@@ -128,7 +179,7 @@ const SideBar = () => {
         )}
         {notAllowedProducts?.length === 0 && (
           <p className={styles.text_sidebar_food}>
-            Тут відображатиметься ваш раціон.
+            Не рекомендовані будуть тут.
           </p>
         )}
       </div>

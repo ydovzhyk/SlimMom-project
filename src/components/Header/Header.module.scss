@@ -101,11 +101,10 @@
 }
 
 .userInfoTablet {
-  composes: userInfo;
-  width: 260px;
+  width: 300px;
   justify-content: end;
   background-color: var(--main-color);
-  margin-right: 106px;
+  margin-right: -25px;
 }
 
 .headerNavDesc {

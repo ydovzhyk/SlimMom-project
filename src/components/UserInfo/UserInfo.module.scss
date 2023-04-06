@@ -1,3 +1,4 @@
+@use '../../styles/mixins';
 .link {
   color: #9b9faa;
   background-size: 200% 100%;
@@ -9,6 +10,42 @@
 
 .active {
   color: #212121;
+}
+
+.userInfoSide {
+  display: flex;
+  flex-direction: row;
+
+  @include mixins.mq(tablet) {
+
+  }
+
+  @include mixins.mq(desktop) {
+    padding-right: 40px;
+  }
+}
+
+.userInfoSide p:last-child {
+  color: var(--second-text-color);
+  margin-left: 32px;
+  position: relative;
+}
+
+.userInfoSide p:before {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 0px;
+  top: 17px;
+  left: -30px;
+  border: 2px solid var(--border-color);
+  transform: rotate(90deg);
+  @include mixins.mq(tablet) {
+    top: 7px;
+  }
+  @include mixins.mq(desktop) {
+    top: 7px;
+  }
 }
 
 .userInfoSide p {

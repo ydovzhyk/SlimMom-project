@@ -53,13 +53,13 @@
     padding: 0px;
 
     gap: 15px;
-    height: 245px;
+    height: 360px;
 
     overflow-y: scroll;
   }
 
   @include mixins.mq(desktop) {
-    height: 270px;
+    height: 360px;
   }
 }
 

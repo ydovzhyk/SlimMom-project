@@ -13,6 +13,9 @@ const initialState = {
 const dailyRateSlice = createSlice({
   name: 'dailyRate',
   initialState,
+  reducers: {
+    clearDailyRate: () => ({ ...initialState }),
+  },
   extraReducers: {
     [dailyRateInfo.pending]: store => {
       store.loading = true;
@@ -21,6 +24,7 @@ const dailyRateSlice = createSlice({
     [dailyRateInfo.fulfilled]: (store, { payload }) => {
       store.loading = false;
       store.dailyRate = payload.dailyRate;
+      store.userDataDailyRate = payload.userDateDailyRate;
       store.notAllowedProducts = payload.notAllowedProducts;
     },
     [dailyRateInfo.rejected]: (store, { payload }) => {
@@ -47,3 +51,5 @@ const dailyRateSlice = createSlice({
 });
 
 export default dailyRateSlice.reducer;
+
+export const { clearDailyRate } = dailyRateSlice.actions;

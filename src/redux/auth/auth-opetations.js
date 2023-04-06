@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosLogin, axiosLogout, axiosRegister, axiosRefresh } from 'api/auth';
-import { axiosGetUser } from 'api/user';
+import { axiosLogin, axiosLogout, axiosRegister, axiosRefresh, axiosGetUser } from 'api/auth';
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -45,11 +44,17 @@ export const logout = createAsyncThunk(
 );
 
 export const getUser = createAsyncThunk(
-  'auth/get/user',
-  async (accessToken, { rejectWithValue }) => {
+  'auth/current',
+  async (newAccessToken, { rejectWithValue, getState, dispatch }) => {
     try {
-      const data = await axiosGetUser(accessToken);
-      return data;
+      if (!newAccessToken) {
+        const { auth } = getState();
+        const data = await axiosGetUser(auth.accessToken);
+        return data;
+      } else {
+        const data = await axiosGetUser(newAccessToken);
+        return data;
+      }
     } catch (error) {
       const { data, status } = error.response;
       return rejectWithValue({ data, status });
@@ -59,26 +64,25 @@ export const getUser = createAsyncThunk(
 
 export const refresh = createAsyncThunk(
   'auth/refresh',
-  async (sid, { rejectWithValue, getState, dispatch }) => {
+  async (userInfo, { rejectWithValue, getState, dispatch }) => {
     try {
-      const {
-        auth: { refreshToken },
-      } = getState();
+      const { auth } = getState();
+      let sid = auth.sid;
+      let refreshToken = auth.refreshToken;
+
+      if (!sid || !refreshToken) {
+        sid = userInfo.sid;
+        refreshToken = userInfo.refreshToken;
+      }
       const data = await axiosRefresh(sid, refreshToken);
-      const { newAccessToken } = data;
-      dispatch(getUser(newAccessToken));
+      if (auth.sid) {
+        dispatch(getUser(data.newAccessToken));
+      }
       return data;
     } catch (error) {
       const { data, status } = error.response;
       return rejectWithValue({ data, status });
     }
-  },
-  {
-    condition: (_, { getState }) => {
-      const { auth } = getState();
-      if (!auth.sid) {
-        return false;
-      }
-    },
   }
 );
+

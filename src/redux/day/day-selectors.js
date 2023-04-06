@@ -1,5 +1,6 @@
 export const day = ({ dayProduct }) => dayProduct.day;
 export const daySummary = ({ dayProduct }) => dayProduct.daySummary;
+export const dayPeriod = ({ dayProduct }) => dayProduct.periodSummary;
 export const eatenProduct = ({ dayProduct }) => dayProduct.eatenProduct;
 export const eatenProducts = ({ dayProduct }) => dayProduct.eatenProducts;
 export const getEatenProductsLoading = ({ dayProduct }) => dayProduct.loading;

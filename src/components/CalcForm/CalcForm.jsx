@@ -12,27 +12,37 @@ import Button from '../Shared/Button/Button';
 import TextFieldDefault from 'components/Shared/TextFieldDefault/TextFieldDefault';
 
 import { dailyRateUser } from 'redux/daily-rate/daily-rate-operations';
-import { getID } from 'redux/auth/auth-selectors';
+import { getUser } from 'redux/auth/auth-selectors';
 
 const CalcForm = () => {
-  const [bloodType, setActiveCheckbox] = useState('');
+
   const navigate = useNavigate();
-
-  const id = useSelector(getID);
-
   const dispatch = useDispatch();
+
+  const { _id } = useSelector(getUser);
+
+  let userData = {};
+  const dataFromUser = useSelector(getUser);
+  if (dataFromUser.userData) {
+    userData = dataFromUser.userData;
+  } else if (!Object.entries(dataFromUser).length) {
+    userData = JSON.parse(localStorage.getItem(`user_${_id}_userData`)) || {};
+  }
+
+  const [bloodType, setBloodType] = useState(userData.bloodType - 1);
 
   const { control, register, handleSubmit, reset } = useForm({
     defaultValues: {
-      weight: '',
-      height: '',
-      age: '',
-      desiredWeight: '',
-      bloodType: '',
+      weight: userData && userData.weight ? userData.weight : "",
+      height: userData && userData.height ? userData.height : "",
+      age: userData && userData.age ? userData.age : '',
+      desiredWeight: userData && userData.desiredWeight ? userData.desiredWeight : '',
+      bloodType: userData && userData.bloodType ? userData.bloodType : '',
     },
   });
 
   const onSubmit = (data, e) => {
+    e.preventDefault();
     const numberData = {
       weight: Number(data.weight),
       height: Number(data.height),
@@ -41,10 +51,9 @@ const CalcForm = () => {
       bloodType: Number(data.bloodType),
     };
 
-    e.preventDefault();
-    dispatch(dailyRateUser({ id, ...numberData }));
+    localStorage.setItem(`user_${_id}_userData`, JSON.stringify(numberData));
+    dispatch(dailyRateUser({ _id, ...numberData }));
     reset();
-
     navigate('/dairy');
   };
 
@@ -132,8 +141,8 @@ const CalcForm = () => {
                       className={s.checkbox}
                       type="radio"
                       name="bloodType"
-                      checked={idx === bloodType}
-                      onClick={() => setActiveCheckbox(idx)}
+                      checked={bloodType === idx}
+                      onClick={() => setBloodType(idx)}
                       value={idx + 1}
                       placeholder="Blood type"
                     />
@@ -146,7 +155,7 @@ const CalcForm = () => {
           </div>
         </div>
         <div className={s.buttonPosition}>
-          <Button text="Схуднути" type="submit" btnClass="btn" />
+          <Button text="Розрахувати" type="submit" btnClass="btn" />
         </div>
       </form>
       <SideBar />

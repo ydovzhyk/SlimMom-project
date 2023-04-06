@@ -46,7 +46,7 @@ const DailyCaloriesForm = () => {
       bloodType: Number(data.bloodType),
     };
     e.preventDefault();
-
+    localStorage.setItem("unregisteredUser", JSON.stringify(numberData));
     dispatch(dailyRateInfo(numberData));
     setActiveCheckbox('');
     document.querySelector('body').classList.add('no-scroll');

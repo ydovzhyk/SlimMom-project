@@ -25,7 +25,6 @@ const DailyCalorieIntake = () => {
 
   function removeClassList() {
     document.querySelector('body').classList.remove('no-scroll');
-    console.log(document.querySelector('body'));
   }
 
   return (

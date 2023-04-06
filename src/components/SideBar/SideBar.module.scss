@@ -1,13 +1,14 @@
 @use '../../styles/mixins';
+
 .container_sidebar {
-  padding: 40px 20px;
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: var(--background-color);
 
   @include mixins.mq(tablet) {
-    padding: 80px 32px;
+    padding: 40px 16px;
     flex-direction: row;
     justify-content: center;
     align-items: start;
@@ -25,34 +26,35 @@
     align-items: center;
     min-width: 517px;
     min-height: 100vh;
-    padding-top: 150px;
+    padding-top: 50px;
   }
 }
 
 .sum {
   width: 280px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 
   @include mixins.mq(tablet) {
-    width: 290px;
-    margin-right: 97px;
+    width: 280px;
+    margin-right: 80px;
   }
 
   @include mixins.mq(desktop) {
     margin-right: 0;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
   }
 }
 
 .title_sidebar {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-weight: 700;
   font-size: 14px;
   line-height: 1.21;
   letter-spacing: 0.04em;
+  text-align: center;
 
   @include mixins.mq(tablet) {
-    margin-bottom: 35px;
+    margin-bottom: 20px;
   }
 }
 .list_sidebar {
@@ -72,11 +74,11 @@
   color: var(--second-text-color);
 }
 
-.data {
-  @include mixins.mq(desktop) {
-    margin-right: 40px;
-  }
-}
+// .data {
+//   @include mixins.mq(desktop) {
+//     margin-right: 40px;
+//   }
+// }
 
 .text_sidebar_food {
   font-size: 14px;
@@ -94,11 +96,12 @@
   overflow-y: auto;
   overflow-x: hidden;
   @include mixins.mq(tablet) {
-    width: 240px;
+    width: 270px;
     height: 305px;
   }
   @include mixins.mq(desktop) {
-    height: 315px;
+    width: 280px;
+    height: 325px;
   }
 }
 .menuGroupItems {
@@ -114,7 +117,7 @@
     width: 235px;
   }
   @include mixins.mq(desktop) {
-    width: 230px;
+    width: 260px;
   }
 }
 
@@ -142,4 +145,11 @@ input[name='filter'] {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #264061;
+}
+
+.block_sum {
+    @include mixins.mq(tablet) {
+        display: flex;
+        flex-direction: column;
+      }
 }

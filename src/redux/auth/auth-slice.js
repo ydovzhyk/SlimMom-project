@@ -30,16 +30,15 @@ const auth = createSlice({
     clearNewUser: store => {
       store.newUser = {};
     },
+    clearUser: () => ({ ...initialState }),
   },
 
   extraReducers: {
     // * REGISTER
-
     [register.pending]: store => {
       store.loading = true;
       store.error = null;
     },
-
     [register.fulfilled]: (store, { payload }) => {
       store.loading = false;
       store.isLogin = false;
@@ -49,73 +48,69 @@ const auth = createSlice({
       store.accessToken = '';
       store.refreshToken = '';
     },
-
     [register.rejected]: (store, { payload }) => {
       store.loading = false;
       store.error = payload.data.message;
     },
-
     // * LOGIN
-
     [login.pending]: store => {
       store.loading = true;
       store.error = null;
     },
-
     [login.fulfilled]: (store, { payload }) => accessAuth(store, payload),
-
     [login.rejected]: (store, { payload }) => {
       store.loading = false;
       store.error = payload.data.message;
     },
-
     // * LOGOUT
-
     [logout.pending]: store => {
       store.loading = true;
       store.error = null;
     },
-    [logout.fulfilled]: () => ({ ...initialState }),
+    [logout.fulfilled]: store => {
+      store.user = {};
+      store.todaySummary = {};
+      store.sid = '';
+      store.accessToken = '';
+      store.refreshToken = '';
+      store.isLogin = false;
+      store.loading = false;
+      store.isRefreshing = false;
+      store.error = null;
+      store.newUser = {};
+    },
     [logout.rejected]: (store, { payload }) => {
       store.loading = false;
       store.error = payload;
     },
-
     // * REFRESH
-
     [refresh.pending]: store => {
       store.loading = true;
       store.error = null;
       store.isRefreshing = true;
     },
-
     [refresh.fulfilled]: (store, { payload }) => {
-      store.isLogin = true;
       store.loading = false;
       store.sid = payload.sid;
       store.accessToken = payload.newAccessToken;
       store.refreshToken = payload.newRefreshToken;
       store.isRefreshing = false;
     },
-
     [refresh.rejected]: (store, { payload }) => {
       store.loading = false;
+      store.isLogin = false;
       store.error = payload;
     },
-
     // * GET USER
-
     [getUser.pending]: store => {
       store.loading = true;
       store.error = null;
     },
-
     [getUser.fulfilled]: (store, { payload }) => {
       store.isLogin = true;
       store.loading = false;
       store.user = payload;
     },
-
     [getUser.rejected]: (store, { payload }) => {
       store.loading = false;
       store.error = payload;
@@ -124,4 +119,4 @@ const auth = createSlice({
 });
 
 export default auth.reducer;
-export const { clearNewUser } = auth.actions;
+export const { clearNewUser, clearUser } = auth.actions;

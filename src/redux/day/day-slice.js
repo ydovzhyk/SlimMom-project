@@ -3,11 +3,14 @@ import {
   postEatenProduct,
   deleteEatenProduct,
   getInfoByDay,
+  getInfoByPeriod,
+  getEatenProduct,
 } from './day-operations';
 
 const initialState = {
   day: {},
   daySummary: {},
+  periodSummary: {},
   eatenProduct: {},
   eatenProducts: [],
   loading: false,
@@ -22,7 +25,6 @@ const daySlice = createSlice({
   },
   extraReducers: {
     //* getDay
-
     [postEatenProduct.pending]: store => {
       store.loading = true;
       store.error = null;
@@ -38,9 +40,23 @@ const daySlice = createSlice({
       store.loading = false;
       store.error = payload;
     },
-
+    //* getEatenProduct
+    [getEatenProduct.pending]: store => {
+      store.loading = true;
+      store.error = null;
+    },
+    [getEatenProduct.fulfilled]: (store, { payload }) => {
+      store.day = payload.day;
+      store.daySummary = payload.daySummary;
+      store.eatenProduct = payload.eatenProduct;
+      store.loading = false;
+      store.summary = payload;
+    },
+    [getEatenProduct.rejected]: (store, { payload }) => {
+      store.loading = false;
+      store.error = payload;
+    },
     //* deleteDay
-
     [deleteEatenProduct.pending]: store => {
       store.loading = true;
       store.error = null;
@@ -53,9 +69,7 @@ const daySlice = createSlice({
       store.loading = false;
       store.error = payload;
     },
-
     //* getInfoAboutDay
-
     [getInfoByDay.pending]: store => {
       store.loading = true;
       store.error = null;
@@ -66,6 +80,19 @@ const daySlice = createSlice({
       store.aboutDay = payload;
     },
     [getInfoByDay.rejected]: (store, { payload }) => {
+      store.loading = false;
+      store.error = payload;
+    },
+    //* getInfoAboutPeriod
+    [getInfoByPeriod.pending]: store => {
+      store.loading = true;
+      store.error = null;
+    },
+    [getInfoByPeriod.fulfilled]: (store, { payload }) => {
+      store.loading = false;
+      store.periodSummary = payload;
+    },
+    [getInfoByPeriod.rejected]: (store, { payload }) => {
       store.loading = false;
       store.error = payload;
     },

@@ -17,6 +17,7 @@
 }
 
 .overlay {
+  position: relative;
   padding-top: 152px;
   padding-bottom: 60px;
   padding-left: 20px;
@@ -30,9 +31,21 @@
   }
 
   @include mixins.mq(desktop) {
-    padding-top: 140px;
-    padding-bottom: 55px;
+    padding-top: 40px;
   }
+}
+
+.itemBlock{
+  height: 360px;
+
+    @include mixins.mq(tablet) {
+      height: 480px;
+      margin-bottom: 60px;
+    }
+  
+    @include mixins.mq(desktop) {
+      height: 490px;
+    }
 }
 
 .btn {

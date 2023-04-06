@@ -26,6 +26,7 @@ const Register = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const errorLogin = useSelector(getErrorLogin);
+  
   const newUserId = useSelector(getNewUserId);
 
   const { control, handleSubmit, reset } = useForm({
