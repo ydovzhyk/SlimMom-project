@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { getLogin } from 'redux/auth/auth-selectors';
+import { getLogin, getIsRefreshing } from 'redux/auth/auth-selectors';
 import { getUser } from 'redux/auth/auth-opetations';
 import { refresh } from 'redux/auth/auth-opetations';
 import { instance } from '../../api/auth';
@@ -10,6 +10,7 @@ import { getSid, getRefreshToken } from 'redux/auth/auth-selectors';
 const PrivateRoute = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector(getLogin);
+  const isRefreshing = useSelector(getIsRefreshing);
   const sid = useSelector(getSid);
   const refreshToken = useSelector(getRefreshToken);
   const [userInfo, setUserInfo] = useState({ sid: sid, refreshToken: refreshToken });
@@ -79,14 +80,14 @@ const PrivateRoute = () => {
   }, [dispatch, userInfo, newState]);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (!isLogin && isRefreshing) {
     return;
     } else {
     dispatch(getUser());
   }
-  }, [dispatch, isLogin]);
+  }, [dispatch, isLogin, isRefreshing]);
 
-  if (!isLogin) {
+  if (!isLogin && isRefreshing) {
     return <Navigate to="/" />;
   }
 

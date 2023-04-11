@@ -66,6 +66,7 @@ const auth = createSlice({
     [logout.pending]: store => {
       store.loading = true;
       store.error = null;
+      store.isRefreshing = true;
     },
     [logout.fulfilled]: store => {
       store.user = {};
@@ -75,7 +76,7 @@ const auth = createSlice({
       store.refreshToken = '';
       store.isLogin = false;
       store.loading = false;
-      store.isRefreshing = false;
+      store.isRefreshing = true;
       store.error = null;
       store.newUser = {};
     },
@@ -100,6 +101,7 @@ const auth = createSlice({
       store.loading = false;
       store.isLogin = false;
       store.error = payload;
+      store.isRefreshing = true;
     },
     // * GET USER
     [getUser.pending]: store => {

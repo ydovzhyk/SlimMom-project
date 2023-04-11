@@ -8,7 +8,6 @@ import { clearData } from 'redux/dairy-calendar/dairy-calendar-slice';
 import { clearDay } from 'redux/day/day-slice';
 import { logout } from 'redux/auth/auth-opetations';
 import { clearDailyRate } from 'redux/daily-rate/daily-rate-slice';
-import { clearUser } from 'redux/auth/auth-slice';
 import { clearProduct } from 'redux/product-search/search-slice';
 
 const UserInfo = () => {
@@ -18,7 +17,6 @@ const UserInfo = () => {
 
   const onLogout = () => {
     dispatch(logout());
-    dispatch(clearUser());
     dispatch(clearData());
     dispatch(clearDay());
     dispatch(clearDailyRate());
