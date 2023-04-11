@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/frontend-slimmom/static/css/main.583c97c4.css",
-    "main.js": "/frontend-slimmom/static/js/main.e1985f14.js",
+    "main.js": "/frontend-slimmom/static/js/main.da6d5322.js",
     "static/css/708.c0f97dbd.chunk.css": "/frontend-slimmom/static/css/708.c0f97dbd.chunk.css",
     "static/js/708.f08b46f6.chunk.js": "/frontend-slimmom/static/js/708.f08b46f6.chunk.js",
     "static/css/848.0ad0018d.chunk.css": "/frontend-slimmom/static/css/848.0ad0018d.chunk.css",
@@ -84,7 +84,7 @@
     "static/media/back.svg": "/frontend-slimmom/static/media/back.24ce6b342eecfc3ce7e0.svg",
     "static/media/removeBtn.svg": "/frontend-slimmom/static/media/removeBtn.d66f88109a467da5b2e3c6f098eba38d.svg",
     "main.583c97c4.css.map": "/frontend-slimmom/static/css/main.583c97c4.css.map",
-    "main.e1985f14.js.map": "/frontend-slimmom/static/js/main.e1985f14.js.map",
+    "main.da6d5322.js.map": "/frontend-slimmom/static/js/main.da6d5322.js.map",
     "708.c0f97dbd.chunk.css.map": "/frontend-slimmom/static/css/708.c0f97dbd.chunk.css.map",
     "708.f08b46f6.chunk.js.map": "/frontend-slimmom/static/js/708.f08b46f6.chunk.js.map",
     "848.0ad0018d.chunk.css.map": "/frontend-slimmom/static/css/848.0ad0018d.chunk.css.map",
@@ -103,6 +103,6 @@
   },
   "entrypoints": [
     "static/css/main.583c97c4.css",
-    "static/js/main.e1985f14.js"
+    "static/js/main.da6d5322.js"
   ]
 }
