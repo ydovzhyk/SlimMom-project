@@ -1,0 +1,16 @@
+.bottomPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  background-color: var(--accent-color);
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+  }
+}
