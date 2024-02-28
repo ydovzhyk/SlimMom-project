@@ -1,17 +1,14 @@
-import { useTranslation } from 'react-i18next';
 import s from './Button.module.scss';
 
 const Button = ({
-  text = '',
+  text = '+',
   type = 'submit',
-  btnClass = 'btnLight',
+  btnClass = 'btnPlus',
   handleClick,
 }) => {
-  const { t } = useTranslation();
-
   return (
     <button className={s[btnClass]} onClick={handleClick} type={type}>
-      {t(text)}
+      {text}
     </button>
   );
 };

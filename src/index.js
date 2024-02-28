@@ -1,25 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-
-import { BrowserRouter } from 'react-router-dom';
+import { App } from 'components/App';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from './redux/store';
-import reportWebVitals from './reportWebVitals';
-import Loader from 'components/Shared/Loader';
+import { persistor, store } from 'redux/store';
+
+import Loader from 'components/Loader';
 import './styles/styles.scss';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate loading={<Loader />} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+if(process.env.NODE_ENV === "production") {
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <HashRouter>
+        <Provider store={store}>
+          <PersistGate loading={<Loader />} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Provider>
+      </HashRouter>
+    </React.StrictMode>
+  );
+};
 
-reportWebVitals();
+if (process.env.NODE_ENV === "development") {
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={store}>
+          <PersistGate loading={<Loader />} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+};

@@ -1,19 +1,35 @@
-import Slider from 'components/Slider';
-import OurServices from 'components/OurServices';
-import TrustUs from 'components/TrustUs';
-import OurMission from 'components/OurMission';
-import OurContacts from 'components/OurContacts';
+import { dailyRateInfo } from '../../redux/daily-rate/daily-rate-operations';
+import { useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
+
 import s from './Home.module.scss';
 
+import DailyCaloriesForm from '../DailyCaloriesForm/DailyCaloriesForm';
+
+import bcgDesktop from '../../images/desktop/bcgD.png';
+import bcgDesktop2x from '../../images/desktop/bcgD@2x.png';
+
 const Home = () => {
+  const isRetina = useMediaQuery({ query: '(min-resolution: 2dppx)' });
+
+  const dispatch = useDispatch();
+
+  const onGetDailyRate = store => {
+    const action = dailyRateInfo(store);
+    dispatch(action);
+  };
+
   return (
-    <div className={s.home}>
-      <Slider />
-      <OurServices />
-      <OurMission />
-      <TrustUs />
-      <OurContacts />
-    </div>
+    <section className={s.home}>
+      <DailyCaloriesForm onSubmit={onGetDailyRate} />
+
+      {!isRetina && (
+        <img className={s.imgDesktop} src={bcgDesktop} alt="background" />
+      )}
+      {isRetina && (
+        <img className={s.imgDesktop} src={bcgDesktop2x} alt="background" />
+      )}
+    </section>
   );
 };
 

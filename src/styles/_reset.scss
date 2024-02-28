@@ -50,8 +50,6 @@ var,
 b,
 u,
 i,
-input,
-label,
 center,
 dl,
 dt,
@@ -88,9 +86,7 @@ ruby,
 section,
 summary,
 time,
-textarea,
 mark,
-button,
 audio,
 video {
   margin: 0;
@@ -116,7 +112,6 @@ section {
 }
 body {
   line-height: 1;
-  color: var(--text-color);
 }
 ol,
 ul {
@@ -142,16 +137,6 @@ button {
   cursor: pointer;
 }
 
-button:disabled {
-  opacity: 0.6;
-}
-
 a {
   text-decoration: none;
-  color: var(--text-color);
-}
-
-img {
-  display: block;
-  max-width: 100%;
 }
